@@ -180,7 +180,7 @@
 
 .article-body {
     font-family: var(--font-bitacora-family);
-    font-weight: var(--font-bitacora-weight-medium);
+    font-weight: var(--font-bitacora-weight-regular);
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
