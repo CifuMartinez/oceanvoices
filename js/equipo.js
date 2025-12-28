@@ -89,6 +89,15 @@ function initTeamExpandGallery() {
             setActiveImage(index, members, infoContainer, nameElement, descriptionElement, bioElement);
         });
     });
+    
+    // Reajustar tamaños cuando cambie el tamaño de ventana
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            setActiveImage(activeImageIndex, members, infoContainer, nameElement, descriptionElement, bioElement);
+        }, 250);
+    });
 }
 
 // ============================================
@@ -139,14 +148,28 @@ function setActiveImage(index, members, infoContainer, nameElement, descriptionE
     // ANIMAR CADA MIEMBRO CON GSAP
     // Equivalente a motion.div con animate en Framer Motion
     // ============================================
+    // Determinar tamaños según el tamaño de pantalla
+    const isDesktop = window.innerWidth >= 768;
+    
     members.forEach((member, memberIndex) => {
         const isActive = memberIndex === index;
         
-        // Dimensiones según el estado (igual que el componente original)
-        // Activo: width: 24rem (384px), height: 24rem (384px)
-        // Inactivo: width: 5rem (80px), height: 20rem (320px)
-        const targetWidth = isActive ? '24rem' : '5rem';
-        const targetHeight = isActive ? '24rem' : '20rem';
+        // Dimensiones según el estado y tamaño de pantalla
+        let targetWidth, targetHeight;
+        
+        if (isDesktop) {
+            // Desktop (>=768px): Tamaños originales
+            // Activo: width: 24rem (384px), height: 24rem (384px)
+            // Inactivo: width: 5rem (80px), height: 20rem (320px)
+            targetWidth = isActive ? '24rem' : '5rem';
+            targetHeight = isActive ? '24rem' : '20rem';
+        } else {
+            // Mobile (<768px): Tamaños reducidos
+            // Activo: width: 12rem, height: 14rem (para encajar en contenedor de 14rem)
+            // Inactivo: width: 2.5rem (40px), height: 12rem
+            targetWidth = isActive ? '12rem' : '2.5rem';
+            targetHeight = isActive ? '14rem' : '12rem';
+        }
         
         // Animar con GSAP (equivalente a transition en Framer Motion)
         // duration: 0.3, ease: "easeInOut" del componente original

@@ -393,16 +393,7 @@
     z-index: 1;
 }
 
-.estructura-video-text {
-    position: absolute;
-    top: 80%;
-    left: 35%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    font-weight: var(--font-primary-weight-medium);
-    text-align: left;
-    text-decoration: underline;
-}
+
 
 
 .text-description-estructura{
