@@ -71,9 +71,18 @@ function initEstructuraSlider() {
         // Reproducir video del slide actual
         const currentVideo = slides[index].querySelector('.estructura-video');
         if (currentVideo) {
-            currentVideo.play().catch(err => {
-                console.log('Error al reproducir video:', err);
-            });
+            // Asegurar que el video esté listo antes de reproducir
+            if (currentVideo.readyState >= 2) {
+                currentVideo.play().catch(err => {
+                    console.log('Error al reproducir video:', err);
+                });
+            } else {
+                currentVideo.addEventListener('loadeddata', () => {
+                    currentVideo.play().catch(err => {
+                        console.log('Error al reproducir video:', err);
+                    });
+                }, { once: true });
+            }
         }
         
         currentSlide = index;
@@ -242,10 +251,28 @@ function initEstructuraSlider() {
     
     // Inicializar posición del slider y primer slide
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-    goToSlide(0);
     
-    // Iniciar auto-play
-    startAutoPlay();
+    // Asegurar que los videos estén listos antes de iniciar
+    videos.forEach(video => {
+        video.load(); // Forzar carga de los videos
+    });
+    
+    // Esperar a que el primer video esté listo antes de iniciar
+    const firstVideo = slides[0].querySelector('.estructura-video');
+    if (firstVideo) {
+        if (firstVideo.readyState >= 2) {
+            goToSlide(0);
+            startAutoPlay();
+        } else {
+            firstVideo.addEventListener('loadeddata', () => {
+                goToSlide(0);
+                startAutoPlay();
+            }, { once: true });
+        }
+    } else {
+        goToSlide(0);
+        startAutoPlay();
+    }
     
     // Pausar auto-play cuando la ventana pierde el foco
     document.addEventListener('visibilitychange', () => {
