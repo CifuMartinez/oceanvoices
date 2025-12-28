@@ -112,7 +112,7 @@ h4{
 
 /* Wrapper para padding inline consistente */
 .wrapper-width {
-    padding-inline: 3rem;
+    padding-inline: 0rem;
 }
 
 

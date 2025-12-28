@@ -464,6 +464,7 @@
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    padding-inline: 1rem;
 }
 
 
