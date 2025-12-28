@@ -1,0 +1,788 @@
+/* Contenedor principal con waves de fondo fijo */
+.waves-background-container,
+.header-waves-wrapper {
+    position: relative;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    margin-top: -120px; /* Compensar el padding-top del body para centrar desde el inicio */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+/* Contenedor centrado para ambas secciones */
+.sections-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+}
+
+/* Nuestra Propuesta */
+.propuesta-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    padding: 2rem 2.5rem;
+    z-index: 2;
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+/* Animación de desaparición de propuesta */
+.propuesta-section.fade-out {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+    visibility: hidden;
+}
+
+.propuesta-content {
+    position: relative;
+    z-index: 1;
+}
+
+.propuesta-text {
+    color: var(--accent-dark-blue);
+    font-family: var(--font-primary-family);
+    font-weight: var(--font-primary-weight-medium);
+    word-break: keep-all;
+    overflow-wrap: normal;
+    word-wrap: normal;
+    hyphens: none;
+    white-space: normal;
+}
+
+.propuesta-text .text-line {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.propuesta-text .word {
+    color: var(--accent-dark-blue);
+    font-weight: var(--font-primary-weight-medium);
+    display: inline-block;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.propuesta-text .word.filled {
+    color: var(--text-primary);
+    font-weight: var(--font-primary-weight-medium);
+}
+/* Header dentro del wrapper */
+.header-waves-wrapper .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Waves de fondo fijo que cubren todo el contenedor */
+.group-waves {
+    position: fixed;
+    z-index: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+.group-waves .wave {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+    will-change: opacity, transform;
+}
+
+/* Posicionamiento específico de cada wave para crear profundidad */
+.group-waves .wave-1 {
+    z-index: 1;
+}
+
+.group-waves .wave-2 {
+    z-index: 2;
+}
+
+.group-waves .wave-3 {
+    z-index: 3;
+}
+
+
+/* Sección LAS CLAVES */
+.claves-section {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%) scale(0.75);
+    max-width: 90%;
+    padding: 2rem 1rem;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.claves-section.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+
+
+/* ============================================
+   CARRUSEL CON EFECTO CARDS
+   ============================================ */
+.clave-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 768px; /* max-w-3xl del original */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    min-height: 300px; /* Altura mínima para evitar colapso */
+}
+
+/* Clase exacta del componente original: Carousal_002 */
+.Carousal_002 {
+    width: 220px;
+    height: 300px ;
+    padding-bottom: 50px ;
+    overflow: visible;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.Carousal_002 .swiper-slide {
+    width: 220px ;
+    height: 300px ;
+    border-radius: 24px; /* rounded-3xl = 1.5rem = 24px */
+    overflow: hidden;
+    display: flex ;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.Carousal_002 .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+}
+
+.Carousal_002 .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilos de respaldo antes de que Swiper se inicialice */
+.Carousal_002:not(.swiper-initialized) .swiper-slide {
+    position: relative;
+    margin-right: 40px;
+}
+
+.Carousal_002:not(.swiper-initialized) .swiper-slide:first-child {
+    opacity: 1;
+}
+
+.Carousal_002:not(.swiper-initialized) .swiper-slide:not(:first-child) {
+    display: none;
+}
+.clave-title {
+    padding-inline: 2rem;
+    line-height: 1.05;
+}
+
+
+
+
+
+/* Estados de visibilidad para cada clave-item */
+.clave-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.clave-item.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.clave-item.fade-out {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.8);
+}
+
+/* Sección Estructura Narrativa */
+.estructura-section {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Fondo con imagen y gradiente */
+.estructura-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.estructura-bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    height: 100%;
+    width: 100%;
+    object-position: center; 
+}
+
+.estructura-bg-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(16, 18, 27, 1) 0%,
+        rgba(16, 18, 27, 1) 10%,
+        rgba(16, 18, 27, 0) 40%,
+        rgba(16, 18, 27, 0) 60%,
+        rgba(16, 18, 27, 1) 90%,
+        rgba(16, 18, 27, 1) 100%
+    );
+    z-index: 1;
+}
+
+
+/* Contenedor del slider */
+.estructura-slider-container {
+    position: relative;
+    z-index: 3;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+.estructura-slider-wrapper {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.estructura-slider {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.estructura-slide {
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.estructura-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.estructura-act {
+    font-size: var(--font-size-small);
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-medium);
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(124, 175, 191, 0.2);
+}
+
+.estructura-heading {
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor de video */
+.estructura-video-container {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 16 / 9;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    border: 2px solid var(--text-primary);
+}
+
+.estructura-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.estructura-video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary);
+    mix-blend-mode: multiply;
+    opacity: 0.4;
+    z-index: 1;
+}
+
+.estructura-video-text {
+    position: absolute;
+    top: 80%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    font-weight: var(--font-primary-weight-medium);
+    text-align: left;
+    text-decoration: underline;
+}
+
+
+.text-description-estructura{
+    margin-bottom: 0.5rem;
+}
+
+/* Indicadores de progreso */
+.estructura-progress {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 600px;
+}
+
+.progress-line {
+    flex: 1;
+    height: 0.25rem;
+    background-color: var(--grey-select);
+    border-radius: 0.125rem;
+    overflow: hidden;
+    position: relative;
+    max-width: 4rem;
+}
+
+.progress-line-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0%;
+    background-color: var(--accent-blue);
+    border-radius: 0.125rem;
+    transition: width 0.3s ease;
+}
+
+.progress-line-fill.active {
+    background-color: var(--accent-blue);
+}
+
+/* Sección Las Voces del Proyecto */
+
+
+.voces-section {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 14rem;
+}
+
+.voces-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+
+.voces-subtitle {
+    font-family: var(--font-secondary-family);
+    color: var(--accent-blue);
+    font-size: var(--font-size-small);
+    line-height: 1.25;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Wrapper del slider */
+.voces-slider-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Contenedor del slider con scroll horizontal */
+.voces-slider-container {
+    position: relative;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 2rem 0;
+    scroll-behavior: smooth;
+}
+
+.voces-slider-container::-webkit-scrollbar {
+    display: none;
+}
+
+/* Grid de tarjetas - Slider horizontal */
+.voces-grid {
+    display: flex;
+    padding: 0 calc((100vw - 85vw) / 2);
+    width: max-content;
+}
+
+
+
+
+
+/* Tarjeta de voz */
+.voz-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    background-color: var(--bg-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    opacity: 1;
+    transform: translateY(0);
+    flex-shrink: 0;
+    width: 85vw;
+    max-width: 400px;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    will-change: transform, scale;
+}
+
+.voz-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+}
+
+/* Botón de play */
+.voz-play-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: rgba(16, 18, 27, 0.85);
+    border: 1px solid rgba(253, 240, 231, 0.3);
+    border-radius: 1rem;
+    color: var(--text-primary);
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-medium);
+    font-size: var(--font-size-xsmall);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.voz-play-button:hover {
+    background-color: rgba(16, 18, 27, 0.95);
+    border-color: var(--accent-blue);
+    transform: scale(1.05);
+}
+
+.voz-play-button:active {
+    transform: scale(0.95);
+}
+
+.voz-play-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+}
+
+.voz-play-text {
+    letter-spacing: 0.05em;
+}
+
+.voz-card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+
+
+.voz-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.voz-card-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+    pointer-events: none;
+}
+
+.voz-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.5rem;
+    text-align: left;
+    color: var(--text-primary);
+    z-index: 2;
+}
+
+.voz-quote-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: rgba(253, 240, 231, 0.4);
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+}
+
+.voz-quote {
+    margin-bottom: 1rem;
+}
+
+.voz-caption {
+    margin-top: 1rem;
+}
+
+.voz-name {
+    font-family: var(--font-primary-family);
+    font-weight: var(--font-primary-weight-bold);
+    font-size: var(--font-size-medium);
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.voz-role {
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-regular);
+    font-size: var(--font-size-small);
+    color: var(--grey-select);
+    max-width: 90%;
+}
+
+/* Modal de Video */
+.voces-video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.voces-video-modal.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+.voces-video-modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 18, 27, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.voces-video-modal-content {
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    aspect-ratio: 9 / 16;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.voces-video-modal-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--text-primary);
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10002;
+}
+
+.voces-video-modal-close:hover {
+    background-color: var(--grey-select);
+    transform: scale(1.1);
+}
+
+.voces-video-modal-close svg {
+    width: 20px;
+    height: 20px;
+}
+
+.voces-video-modal-iframe-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    border: 2px solid var(--text-primary);
+}
+
+.voces-video-modal-iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+@media (min-width: 480px) {
+    .voces-grid {
+        padding: 0 calc((100vw - min(85vw, 400px)) / 2);
+    }
+}
+
+
+@media (min-width: 768px) {
+    .propuesta-section {
+        max-width: 60%;
+
+    }
+
+     .clave-carousel-wrapper {
+        max-width: 1000px;
+        padding: 3rem 0;
+        min-height: 450px;
+    }
+    
+    .Carousal_002 {
+        width: 280px;
+        height: 410px;
+        padding-bottom: 70px;
+    }
+    
+    .Carousal_002 .swiper-slide {
+        width: 280px;
+        height: 410px;
+    }
+
+    .estructura-bg-gradient {
+
+        background: linear-gradient(
+        to bottom,
+        rgba(16, 18, 27, 1) 0%,
+        rgba(16, 18, 27, 1) 5%,
+        rgba(16, 18, 27, 0) 40%,
+        rgba(16, 18, 27, 0) 60%,
+        rgba(16, 18, 27, 1) 95%,
+        rgba(16, 18, 27, 1) 100%
+    ); 
+    }
+
+    .estructura-video-container {
+        max-width: 600px;
+        margin-bottom: 2rem;
+    }
+
+
+}   
+

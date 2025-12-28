@@ -1,0 +1,277 @@
+/* Estilos principales comunes */
+
+/* Fuentes Chivo Mono */
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-Light.woff2') format('woff2'),
+         url('../fonts/ChivoMono-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-LightItalic.woff2') format('woff2'),
+         url('../fonts/ChivoMono-LightItalic.woff') format('woff');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-Regular.woff2') format('woff2'),
+         url('../fonts/ChivoMono-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-Italic.woff2') format('woff2'),
+         url('../fonts/ChivoMono-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-Medium.woff2') format('woff2'),
+         url('../fonts/ChivoMono-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Chivo Mono';
+    src: url('../fonts/ChivoMono-MediumItalic.woff2') format('woff2'),
+         url('../fonts/ChivoMono-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    /* Colores base - se ajustarán más adelante */
+    --bg-primary: #10121b;
+    --text-primary: #fdf0e7;
+    --accent-blue: #7cafbf;
+    --accent-dark-blue: #265463;
+    --grey-select: rgba(253, 240, 231, 0.371);
+    
+    /* Fuentes - Helvetica Neue */
+    --font-primary-family: helvetica-neue-lt-pro, sans-serif;
+    --font-primary-weight-regular: 400;
+    --font-primary-weight-medium: 500;
+    --font-primary-weight-bold: 700;
+    --font-primary-style-normal: normal;
+    --font-primary-style-italic: italic;
+    
+    /* Fuentes - Chivo Mono */
+    --font-secondary-family: 'Chivo Mono', monospace;
+    --font-secondary-weight-light: 300;
+    --font-secondary-weight-regular: 400;
+    --font-secondary-weight-medium: 500;
+    --font-secondary-style-normal: normal;
+    --font-secondary-style-italic: italic;
+    
+    /* Tamaños de fuente */
+    --font-size-xsmall: 12px;
+    --font-size-small: 16px;
+    --font-size-medium: 18px;
+    --font-size-large: 20px;
+    --font-size-xlarge: 32px;
+}
+
+h2{
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-regular);
+    text-transform: uppercase;
+    font-size: var(--font-size-small);
+    text-align: center;
+    padding-bottom: 1.5rem;
+}
+
+h3{
+    font-family: var(--font-primary-family);
+    font-weight: var(--font-primary-weight-bold);
+    font-size: var(--font-size-xlarge);
+    text-align: center;
+}
+
+h4{
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-regular);
+    text-transform: uppercase;
+    font-size: var(--font-size-medium);
+}
+
+/* Wrapper para padding inline consistente */
+.wrapper-width {
+    padding-inline: 3rem;
+}
+
+
+
+body {
+    font-family: var(--font-primary-family);
+    font-weight: var(--font-primary-weight-regular);
+    text-align: center;
+    font-size: var(--font-size-small);
+    line-height: 1.2;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    padding-top: 120px; /* Espacio para el header fijo */
+    padding-bottom: 120px; /* Espacio para el footer fijo */
+    margin: 0;
+}
+
+/* Header común */
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 2rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-logo {
+    width: 30vw;
+    max-width: 200px;
+    height: auto;
+}
+
+header.top {
+    position:absolute;
+}
+/* Footer común */
+.footer-icons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.footer-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--text-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.footer-icon:hover {
+    background-color: var(--grey-select);
+}
+
+.footer-icon:active {
+    background-color: var(--grey-select);
+}
+
+.footer-icon.active {
+    background-color: var(--grey-select);
+}
+
+.footer-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.footer-button {
+    background-color: var(--grey-select);
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
+    font-size: var(--font-size-medium);
+    font-family: var(--font-secondary-family);
+    font-weight: var(--font-secondary-weight-medium);
+    color: var(--text-primary);
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+
+/* Footer común */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(to top, 
+        var(--bg-primary) 0%, 
+        rgba(16, 18, 27, 0.9) 50%,
+        transparent 100%);
+    backdrop-filter: blur(10px);
+    mask-image: linear-gradient(to top, 
+        black 0%, 
+        rgba(0, 0, 0, 0.8) 50%,
+        transparent 100%);
+    -webkit-mask-image: linear-gradient(to top, 
+        black 0%, 
+        black 50%, 
+        rgba(0, 0, 0, 0.8) 80%,
+        transparent 100%);}
+
+
+@media (min-width: 480px) {
+    .header-logo {
+        width: 100%;
+        max-width: 150px;
+    }
+}
+
+@media (min-width: 768px) {
+   
+   
+    p{
+        font-size: var(--font-size-medium);
+    }
+
+    h2{
+        font-size: var(--font-size-large);
+    }
+
+    h3{
+        font-size: var(--font-size-xlarge);
+    }
+    .wrapper-width {
+        padding-inline: 6rem;
+    }
+    .footer-icon {
+        width: 3rem;
+        height: 3rem;
+    }
+    .footer-icon svg{
+        width: 2rem;
+        height: 2rem;
+    }
+    .footer-button {
+        padding: 0.5rem 1.5rem;
+        font-size: var(--font-size-large);
+    }
+}
+
+@media (min-width: 1024px) {
+    .wrapper-width {
+        padding-inline: 16rem;
+    }
+}
