@@ -12,11 +12,15 @@
    Basado en el componente Skiper UI #52
    ============================================ */
 .team-gallery {
+   
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.team-gallery-description {
+    display: none;
 }
 
 .team-expand-container {
@@ -157,6 +161,18 @@
 
 
 @media (min-width: 768px) {
+    .team-gallery-description {
+        display: block;
+     width: 100%;
+     padding-inline: 10rem;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: 3rem;
+    .highlight {
+        color: var(--accent-blue);
+        font-weight: var(--font-primary-weight-bold);
+    }
+    }
     .team-members-expand {
         gap: 1rem;
         height: 24rem; /* Altura para desktop (384px) */
@@ -164,5 +180,11 @@
     
     .team-member-expand {
         height: 20rem; /* Altura inicial para desktop (320px) */
+    }
+}
+
+@media (min-width: 1440px) {
+    .team-gallery-description {
+        padding-inline: 20rem;
     }
 }

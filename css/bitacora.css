@@ -313,6 +313,27 @@
         padding-inline: 6rem;
     }
 
+    .main-title {
+        font-size: var(--font-bitacora-size-xxxlarge);
+    }
+
+    .main-subtitle {
+        font-size: var(--font-bitacora-size-large);
+    }
+
+    .article-body {
+        font-size: var(--font-bitacora-size-large);
+        p{
+            font-size: var(--font-bitacora-size-large);
+            font-weight: var(--font-bitacora-weight-light);
+            line-height: 1.5;
+        }
+
+        .entry-quote{
+            font-size: var(--font-bitacora-size-xxlarge);
+        }
+    }
+
     .image-isotype {
        img{
         width: 6rem;
@@ -329,4 +350,18 @@
     width: 200px;
     height: 120px;
 }
+
+}
+
+@media (min-width: 1440px) {
+    .bitacora-article {
+        padding-inline: 12rem;
+    }
+    
+}
+
+@media (min-width: 1920px) {
+    .bitacora-article {
+        padding-inline: 32rem;
+    }
 }
