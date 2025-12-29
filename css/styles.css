@@ -91,6 +91,7 @@ h2{
     font-family: var(--font-secondary-family);
     font-weight: var(--font-secondary-weight-regular);
     text-transform: uppercase;
+    text-decoration: underline;
     font-size: var(--font-size-small);
     text-align: center;
     padding-bottom: 1.5rem;

@@ -477,22 +477,37 @@ function initVocesSlider() {
         });
     };
     
-    // Rebote al finalizar scroll
+    // Rebote al finalizar scroll (solo en desktop, no interfiere con touch)
     let scrollTimeout;
+    let isScrolling = false;
     vocesSliderContainer.addEventListener('scroll', () => {
         updateScales();
+        isScrolling = true;
         clearTimeout(scrollTimeout);
         scrollTimeout = setTimeout(() => {
-            const scroll = vocesSliderContainer.scrollLeft;
-            gsap.to(vocesSliderContainer, {
-                scrollLeft: scroll - 5,
-                duration: 0.1,
-                ease: 'power1.out',
-                onComplete: () => {
-                    gsap.to(vocesSliderContainer, { scrollLeft: scroll, duration: 0.2, ease: 'power2.out' });
-                }
-            });
-        }, 100);
+            isScrolling = false;
+            // Solo aplicar rebote si no es un scroll táctil activo
+            if (!vocesSliderContainer.matches(':active')) {
+                const scroll = vocesSliderContainer.scrollLeft;
+                gsap.to(vocesSliderContainer, {
+                    scrollLeft: scroll - 5,
+                    duration: 0.1,
+                    ease: 'power1.out',
+                    onComplete: () => {
+                        gsap.to(vocesSliderContainer, { scrollLeft: scroll, duration: 0.2, ease: 'power2.out' });
+                    }
+                });
+            }
+        }, 150);
+    }, { passive: true });
+    
+    // Habilitar desplazamiento táctil en todas las pantallas
+    vocesSliderContainer.addEventListener('touchstart', (e) => {
+        // Permitir que el evento de touch se propague normalmente
+    }, { passive: true });
+    
+    vocesSliderContainer.addEventListener('touchmove', (e) => {
+        // Permitir desplazamiento táctil
     }, { passive: true });
     
     // Animación de entrada
