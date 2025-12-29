@@ -43,21 +43,18 @@ function initEstructuraSlider() {
         
         // Remover clase active de todos los slides
         slides.forEach(slide => slide.classList.remove('active'));
+        
+        // Desactivar todas las líneas de progreso y reiniciarlas a 0%
         progressLines.forEach((line, i) => {
             line.classList.remove('active');
-            // Mantener el ancho al 100% si el slide ya fue visitado, solo cambiar el color
-            if (i < index || (i === index && line.style.width === '100%')) {
-                line.style.width = '100%';
-            }
+            // Reiniciar todas las líneas a 0% y quitar transición para reset instantáneo
+            line.style.transition = 'none';
+            line.style.width = '0%';
         });
         
         // Añadir clase active al slide actual
         slides[index].classList.add('active');
         progressLines[index].classList.add('active');
-        // Establecer el ancho al 100% si no está ya establecido
-        if (progressLines[index].style.width === '' || progressLines[index].style.width === '0%') {
-            progressLines[index].style.width = '100%';
-        }
         
         // Actualizar transform del slider
         slider.style.transform = `translateX(-${index * 100}%)`;
@@ -113,17 +110,19 @@ function initEstructuraSlider() {
         
         // Reiniciar el indicador de progreso del slide actual
         const currentProgressLine = progressLines[currentSlide];
-        if (currentProgressLine) {
-            // Solo reiniciar si no está ya al 100%
-            if (currentProgressLine.style.width !== '100%') {
-                currentProgressLine.style.width = '0%';
-            }
-            currentProgressLine.style.transition = `width ${autoPlayDelay / 1000}s linear`;
+        if (currentProgressLine && currentProgressLine.classList.contains('active')) {
+            // Siempre reiniciar a 0% para comenzar la animación desde el principio
+            currentProgressLine.style.transition = 'none';
+            currentProgressLine.style.width = '0%';
             
-            // Animar el relleno del indicador
-            setTimeout(() => {
-                currentProgressLine.style.width = '100%';
-            }, 10);
+            // Usar requestAnimationFrame para asegurar que el reset se aplique antes de la animación
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    // Aplicar la transición y animar hasta 100%
+                    currentProgressLine.style.transition = `width ${autoPlayDelay / 1000}s linear`;
+                    currentProgressLine.style.width = '100%';
+                });
+            });
         }
         
         autoPlayInterval = setInterval(() => {

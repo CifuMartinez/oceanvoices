@@ -6,6 +6,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initNavigation() {
+    // Logotipo - siempre redirige a la página de proyecto
+    const headerLogo = document.querySelector('.header-logo');
+    if (headerLogo) {
+        headerLogo.style.cursor = 'pointer';
+        headerLogo.addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+    }
+    
     // Iconos de navegación en el header
     const headerIcons = document.querySelectorAll('.header-icon');
     

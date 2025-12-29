@@ -2,30 +2,227 @@
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
-// Espera a que las fuentes estén cargadas antes de ejecutar SplitText
-function initAfterFontsLoaded() {
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(() => {
-            initPropuestaScroll();
-            initClavesCarousel();
-            initEstructuraNavigation();
-            initVocesSlider();
-            setActiveButton('EL PROYECTO');
+// Bloquear scroll inicialmente
+document.body.style.overflow = 'hidden';
+
+// Función para animar la entrada de la pantalla de carga
+function animateLoadingScreenEntry() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingVideo = loadingScreen?.querySelector('.loading-video');
+    
+    if (loadingScreen && loadingVideo) {
+        // Verificar si el video puede cargarse
+        loadingVideo.addEventListener('error', (e) => {
+            console.error('Error al cargar el video de carga:', e);
+            // Si hay error, intentar cargar manualmente
+            loadingVideo.load();
+        }, { once: true });
+        
+        // Esperar a que el video tenga datos cargados antes de reproducir
+        const tryPlay = () => {
+            if (loadingVideo.readyState >= 2) {
+                loadingVideo.play().catch(err => {
+                    console.log('Error al reproducir video de carga:', err);
+                });
+            } else {
+                loadingVideo.addEventListener('loadeddata', () => {
+                    loadingVideo.play().catch(err => {
+                        console.log('Error al reproducir video de carga:', err);
+                    });
+                }, { once: true });
+            }
+        };
+        
+        // Intentar reproducir inmediatamente o cuando esté listo
+        tryPlay();
+        
+        // Animación de entrada suave
+        gsap.set(loadingScreen, { opacity: 0, scale: 0.95 });
+        gsap.set(loadingVideo, { opacity: 0, scale: 0.8 });
+        
+        gsap.to(loadingScreen, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power2.out'
         });
-    } else {
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                initPropuestaScroll();
-                initClavesCarousel();
-                initEstructuraNavigation();
-                initVocesSlider();
-                setActiveButton('EL PROYECTO');
-            }, 100);
+        
+        gsap.to(loadingVideo, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            delay: 0.1
         });
     }
 }
 
-document.addEventListener('DOMContentLoaded', initAfterFontsLoaded);
+// Función para ocultar la pantalla de carga con animación suave
+function hideLoadingScreen() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingVideo = loadingScreen?.querySelector('.loading-video');
+    
+    if (loadingScreen && loadingVideo) {
+        // Pausar el video antes de ocultar
+        loadingVideo.pause();
+        
+        // Marcar el body como cargado para mostrar el contenido
+        document.body.classList.add('loaded');
+        
+        // Animación de salida suave
+        gsap.to(loadingVideo, {
+            opacity: 0,
+            scale: 0.8,
+            duration: 0.5,
+            ease: 'power2.in'
+        });
+        
+        gsap.to(loadingScreen, {
+            opacity: 0,
+            scale: 1.05,
+            duration: 0.8,
+            ease: 'power2.in',
+            delay: 0.2,
+            onComplete: () => {
+                loadingScreen.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+    }
+}
+
+// Verificar si el contenido está en caché
+function isContentCached() {
+    // Verificar si las imágenes principales ya están cargadas
+    const images = document.querySelectorAll('img');
+    let allImagesCached = true;
+    images.forEach(img => {
+        if (!img.complete) {
+            allImagesCached = false;
+        }
+    });
+    
+    // Verificar si los videos ya tienen datos
+    const videos = document.querySelectorAll('video');
+    let allVideosCached = true;
+    videos.forEach(video => {
+        if (video.readyState < 2) {
+            allVideosCached = false;
+        }
+    });
+    
+    // Verificar si el documento ya está completamente cargado
+    const documentReady = document.readyState === 'complete';
+    
+    // Si todo está cargado, probablemente está en caché
+    return allImagesCached && allVideosCached && documentReady;
+}
+
+// Espera a que todo esté cargado antes de mostrar el contenido
+function waitForAllAssets() {
+    const promises = [];
+    
+    // Verificar si el contenido está en caché
+    if (isContentCached()) {
+        // Si está en caché, resolver inmediatamente sin delay mínimo
+        return Promise.resolve();
+    }
+    
+    // Esperar a que las fuentes estén cargadas
+    if (document.fonts && document.fonts.ready) {
+        promises.push(document.fonts.ready);
+    }
+    
+    // Esperar a que todas las imágenes estén cargadas
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+        if (!img.complete) {
+            promises.push(new Promise((resolve) => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+            }));
+        }
+    });
+    
+    // Esperar a que todos los videos estén listos
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        if (video.readyState < 2) {
+            promises.push(new Promise((resolve) => {
+                video.addEventListener('loadeddata', resolve, { once: true });
+                video.addEventListener('error', resolve, { once: true });
+            }));
+        }
+    });
+    
+    // Esperar a que la ventana esté completamente cargada
+    promises.push(new Promise((resolve) => {
+        if (document.readyState === 'complete') {
+            resolve();
+        } else {
+            window.addEventListener('load', resolve, { once: true });
+        }
+    }));
+    
+    // Solo esperar un mínimo de tiempo si NO está en caché
+    promises.push(new Promise((resolve) => {
+        setTimeout(resolve, 1000); // Mínimo 1 segundo de carga
+    }));
+    
+    return Promise.all(promises);
+}
+
+// Espera a que las fuentes estén cargadas antes de ejecutar SplitText
+function initAfterFontsLoaded() {
+    // Verificar si el contenido está en caché
+    const cached = isContentCached();
+    
+    if (cached) {
+        // Si está en caché, ocultar la pantalla de carga inmediatamente y mostrar contenido
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+        }
+        document.body.classList.add('loaded');
+        document.body.style.overflow = '';
+        
+        // Inicializar funciones directamente
+        initPropuestaScroll();
+        initClavesCarousel();
+        initEstructuraNavigation();
+        initVocesSlider();
+        setActiveButton('EL PROYECTO');
+        return;
+    }
+    
+    // Si no está en caché, mostrar pantalla de carga y esperar
+    animateLoadingScreenEntry();
+    
+    waitForAllAssets().then(() => {
+        // Inicializar todas las funciones
+        initPropuestaScroll();
+        initClavesCarousel();
+        initEstructuraNavigation();
+        initVocesSlider();
+        setActiveButton('EL PROYECTO');
+        
+        // Ocultar pantalla de carga después de un pequeño delay
+        setTimeout(() => {
+            hideLoadingScreen();
+        }, 300);
+    }).catch((error) => {
+        console.error('Error al cargar recursos:', error);
+        // Ocultar pantalla de carga incluso si hay errores
+        setTimeout(() => {
+            hideLoadingScreen();
+        }, 1000);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar después de que las fuentes estén cargadas
+    initAfterFontsLoaded();
+});
 
 function initPropuestaScroll() {
     const wavesContainer = document.querySelector('.header-waves-wrapper');
@@ -509,6 +706,52 @@ function initVocesSlider() {
     vocesSliderContainer.addEventListener('touchmove', (e) => {
         // Permitir desplazamiento táctil
     }, { passive: true });
+    
+    // Drag con mouse para desktop (click y arrastrar)
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartScrollLeft = 0;
+    let hasDragged = false; // Para distinguir entre click y drag
+    
+    vocesSliderContainer.addEventListener('mousedown', (e) => {
+        // No iniciar drag si se hace click en el botón de play o en elementos interactivos
+        if (e.target.closest('.voz-play-button') || e.target.closest('a') || e.target.closest('button')) {
+            return;
+        }
+        
+        isDragging = true;
+        hasDragged = false;
+        dragStartX = e.clientX;
+        dragStartScrollLeft = vocesSliderContainer.scrollLeft;
+        vocesSliderContainer.style.cursor = 'grabbing';
+        vocesSliderContainer.style.userSelect = 'none';
+        e.preventDefault();
+    });
+    
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        
+        hasDragged = true;
+        const diffX = e.clientX - dragStartX;
+        vocesSliderContainer.scrollLeft = dragStartScrollLeft - diffX;
+        updateScales();
+    });
+    
+    document.addEventListener('mouseup', (e) => {
+        if (isDragging) {
+            isDragging = false;
+            vocesSliderContainer.style.cursor = 'grab';
+            vocesSliderContainer.style.userSelect = '';
+        }
+    });
+    
+    vocesSliderContainer.addEventListener('mouseleave', (e) => {
+        if (isDragging) {
+            isDragging = false;
+            vocesSliderContainer.style.cursor = 'grab';
+            vocesSliderContainer.style.userSelect = '';
+        }
+    });
     
     // Animación de entrada
     gsap.from(vozCards, {

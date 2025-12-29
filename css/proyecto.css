@@ -1,3 +1,34 @@
+/* Pantalla de carga */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary); /* Fondo oscuro */
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: scale(1);
+    /* Las transiciones se manejan con GSAP, pero dejamos esto como fallback */
+}
+
+.loading-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-video {
+    width: 200px;
+    height: auto;
+    max-width: 80vw;
+    opacity: 1;
+    transform: scale(1);
+}
+
 /* Contenedor principal con waves de fondo fijo */
 .waves-background-container,
 .header-waves-wrapper {
@@ -445,7 +476,7 @@ opacity: 0.5;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-bottom: 14rem;
+    padding-bottom: 8rem;
 }
 
 .voces-container {
@@ -490,6 +521,11 @@ opacity: 0.5;
     padding: 2rem 0;
     scroll-behavior: smooth;
     touch-action: pan-x; /* Habilitar desplazamiento táctil horizontal en todas las pantallas */
+    cursor: grab; /* Cursor para indicar que se puede arrastrar */
+}
+
+.voces-slider-container:active {
+    cursor: grabbing; /* Cursor mientras se arrastra */
 }
 
 .voces-slider-container::-webkit-scrollbar {
@@ -498,8 +534,7 @@ opacity: 0.5;
 
 /* Grid de tarjetas - Slider horizontal */
 .voces-grid {
-    display: flex;
-    gap: 1rem; /* Espacio entre cards */
+    display: flex;/* Espacio entre cards */
     padding: 0 1rem; /* Padding lateral para mobile */
     width: max-content;
 }
@@ -795,6 +830,9 @@ opacity: 0.5;
         margin-bottom: 2rem;
     }
 
+    .voz-card-image-wrapper {
+        height: 600px;
+    }
 
 }   
 

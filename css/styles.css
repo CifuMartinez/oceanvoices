@@ -132,6 +132,50 @@ body {
     margin: 0;
 }
 
+/* Ocultar contenido inicialmente hasta que la pantalla de carga termine */
+body:not(.loaded) > *:not(.loading-screen) {
+    opacity: 0;
+    visibility: hidden;
+}
+
+body.loaded > *:not(.loading-screen) {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in;
+}
+
+/* Pantalla de carga - común para todas las páginas */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-primary); /* Fondo oscuro */
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transform: scale(1);
+    /* Asegurar que esté visible desde el inicio */
+    visibility: visible !important;
+}
+
+.loading-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-video {
+    width: 200px;
+    height: auto;
+    max-width: 80vw;
+    opacity: 1;
+    transform: scale(1);
+}
+
 /* Header común */
 .header {
     position: sticky;
